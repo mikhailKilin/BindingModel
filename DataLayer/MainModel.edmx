@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MainModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MainModelStoreContainer">
+    <EntitySet Name="Programs" EntityType="MainModel.Store.Programs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Indicators" EntityType="MainModel.Store.Indicators" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Programs_Subprogram" EntityType="MainModel.Store.Programs_Subprogram" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Programs_GovernmentProgram" EntityType="MainModel.Store.Programs_GovernmentProgram" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="SubprogramGovernmentProgram" Association="MainModel.Store.SubprogramGovernmentProgram">
+      <End Role="Subprogram" EntitySet="Programs_Subprogram" />
+      <End Role="GovernmentProgram" EntitySet="Programs_GovernmentProgram" />
+    </AssociationSet>
+    <AssociationSet Name="IndicatorProgram" Association="MainModel.Store.IndicatorProgram">
+      <End Role="Indicator" EntitySet="Indicators" />
+      <End Role="Program" EntitySet="Programs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subprogram_inherits_Program" Association="MainModel.Store.FK_Subprogram_inherits_Program">
+      <End Role="Program" EntitySet="Programs" />
+      <End Role="Subprogram" EntitySet="Programs_Subprogram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GovernmentProgram_inherits_Program" Association="MainModel.Store.FK_GovernmentProgram_inherits_Program">
+      <End Role="Program" EntitySet="Programs" />
+      <End Role="GovernmentProgram" EntitySet="Programs_GovernmentProgram" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Programs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Indicators">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProgramId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Programs_Subprogram">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="GovernmentProgramId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Programs_GovernmentProgram">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="mmGovernmentProgramIndicatorId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="SubprogramGovernmentProgram">
+    <End Role="Subprogram" Type="MainModel.Store.Programs_Subprogram" Multiplicity="*" />
+    <End Role="GovernmentProgram" Type="MainModel.Store.Programs_GovernmentProgram" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="GovernmentProgram">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Subprogram">
+        <PropertyRef Name="GovernmentProgramId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IndicatorProgram">
+    <End Role="Indicator" Type="MainModel.Store.Indicators" Multiplicity="*" />
+    <End Role="Program" Type="MainModel.Store.Programs" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Indicator">
+        <PropertyRef Name="ProgramId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subprogram_inherits_Program">
+    <End Role="Program" Type="MainModel.Store.Programs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Subprogram" Type="MainModel.Store.Programs_Subprogram" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Subprogram">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GovernmentProgram_inherits_Program">
+    <End Role="Program" Type="MainModel.Store.Programs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GovernmentProgram" Type="MainModel.Store.Programs_GovernmentProgram" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GovernmentProgram">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MainModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MainModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Programs" EntityType="MainModel.Program" />
+          <AssociationSet Name="SubprogramGovernmentProgram" Association="MainModel.SubprogramGovernmentProgram">
+            <End Role="Subprogram" EntitySet="Programs" />
+            <End Role="GovernmentProgram" EntitySet="Programs" />
+          </AssociationSet>
+          <EntitySet Name="Indicators" EntityType="MainModel.Indicator" />
+          <AssociationSet Name="IndicatorProgram" Association="MainModel.IndicatorProgram">
+            <End Role="Indicator" EntitySet="Indicators" />
+            <End Role="Program" EntitySet="Programs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Indicators" Relationship="MainModel.IndicatorProgram" FromRole="Program" ToRole="Indicator" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GovernmentProgram" BaseType="MainModel.Program" >
+          <NavigationProperty Name="Subprograms" Relationship="MainModel.SubprogramGovernmentProgram" FromRole="GovernmentProgram" ToRole="Subprogram" />
+          <Property Name="mmGovernmentProgramIndicatorId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subprogram" BaseType="MainModel.Program" >
+          <NavigationProperty Name="GovernmentProgram" Relationship="MainModel.SubprogramGovernmentProgram" FromRole="Subprogram" ToRole="GovernmentProgram" />
+          <Property Name="GovernmentProgramId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="SubprogramGovernmentProgram">
+          <End Type="MainModel.Subprogram" Role="Subprogram" Multiplicity="*" />
+          <End Type="MainModel.GovernmentProgram" Role="GovernmentProgram" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="GovernmentProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subprogram">
+              <PropertyRef Name="GovernmentProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Indicator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Program" Relationship="MainModel.IndicatorProgram" FromRole="Indicator" ToRole="Program" />
+          <Property Name="ProgramId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="IndicatorProgram">
+          <End Type="MainModel.Indicator" Role="Indicator" Multiplicity="*" />
+          <End Type="MainModel.Program" Role="Program" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Indicator">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MainModelStoreContainer" CdmEntityContainer="MainModelContainer">
+    <EntitySetMapping Name="Programs">
+      <EntityTypeMapping TypeName="IsTypeOf(MainModel.Program)">
+        <MappingFragment StoreEntitySet="Programs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(MainModel.Subprogram)">
+        <MappingFragment StoreEntitySet="Programs_Subprogram">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GovernmentProgramId" ColumnName="GovernmentProgramId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(MainModel.GovernmentProgram)">
+        <MappingFragment StoreEntitySet="Programs_GovernmentProgram">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="mmGovernmentProgramIndicatorId" ColumnName="mmGovernmentProgramIndicatorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Indicators">
+      <EntityTypeMapping TypeName="IsTypeOf(MainModel.Indicator)">
+        <MappingFragment StoreEntitySet="Indicators">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

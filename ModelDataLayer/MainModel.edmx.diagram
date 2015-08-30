@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3e388ccb743b4dbeaf302f55ba5ad1fe" Name="Diagram1" >
+        <EntityTypeShape EntityType="MainModel.Program" Width="1.5" PointX="4.375" PointY="4.5" />
+        <EntityTypeShape EntityType="MainModel.Governmentprogram" Width="1.5" PointX="1.75" PointY="7" />
+        <InheritanceConnector EntityType="MainModel.Governmentprogram" />
+        <EntityTypeShape EntityType="MainModel.Subprogram" Width="1.5" PointX="6.875" PointY="7.375" />
+        <InheritanceConnector EntityType="MainModel.Subprogram" ManuallyRouted="true" >
+          <ConnectorPoint PointX="5.125" PointY="5.7110807291666656" />
+          <ConnectorPoint PointX="5.125" PointY="6.6381640625" />
+          <ConnectorPoint PointX="7.625" PointY="6.6381640625" />
+          <ConnectorPoint PointX="7.625" PointY="7.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="MainModel.mmProgramIndicator" Width="1.5" PointX="2.375" PointY="2.625" />
+        <EntityTypeShape EntityType="MainModel.Indicator" Width="1.5" PointX="6.125" PointY="2.625" />
+        <AssociationConnector Association="MainModel.mmProgramIndicatorProgram" />
+        <AssociationConnector Association="MainModel.IndicatormmProgramIndicator" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

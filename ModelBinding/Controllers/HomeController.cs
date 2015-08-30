@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ModelDataLayer;
+using ModelDataLayer.Extensions;
 
 namespace ModelBinding.Controllers
 {
@@ -10,6 +12,10 @@ namespace ModelBinding.Controllers
     {
         public ActionResult Index()
         {
+            using (var ctx = new MainModelContainer())
+            {
+                var asdasd = ctx.CreateEntityByType("Governmentprogram", false);
+            }
             return View();
         }
 
